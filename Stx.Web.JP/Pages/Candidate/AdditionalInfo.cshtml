@@ -1,0 +1,86 @@
+﻿@page
+@model Stx.Web.JP.Pages.Candidate.AdditionalInfoModel
+@{
+}
+
+<section class="min-sec h-100">
+    <div class="container">
+        <partial name="_StatusMessage" for="StatusMessage" />
+
+        <form id="resumeModify" method="post"></form>
+        <div class="row">
+            <partial name="_LeftMenuResume" for="PageKey" />
+
+            @if (Model.PageStatus.IsDisplyErrorBanner)
+            {
+                <div class="col-md-9">
+                    <partial name="_StatusBanner" for="PageStatus" />
+                </div>
+            }
+            else
+            {
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex bd-highlight ">
+                                <h4 class="card-title flex-grow-1" id="repeat-form">Additional Info</h4>
+                            </div>
+                        </div>
+                        <div class="card-content collapse show">
+                            <div class="card-body">
+
+                                @{
+                                    string col1Style = "col-sm-3";
+                                    string col2Style = "col-sm-9";
+
+                                    <form class="resume-edit-panel" method="post">
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                        <input type="hidden" asp-for="BaseEntry.CandidateID" value="@Model.CandidateID" />
+
+                                        <div class="row mb-3">
+                                            <label asp-for="BaseEntry.SkillSetDesc" class="@col1Style col-form-label">Profile Summary</label>
+                                            <div class="@col2Style">
+                                                <textarea asp-for="BaseEntry.SkillSetDesc" class="form-control" rows="10"
+                                                          placeholder="Candidate Overview. Enter your resume summary, skill highlights or career proﬁle summary here."></textarea>
+                                                <span asp-validation-for="BaseEntry.SkillSetDesc" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="BaseEntry.ExpectedSalary" class="@col1Style col-form-label">Expected Salary</label>
+                                            <div class="@col2Style">
+                                                <input type="number" asp-for="BaseEntry.ExpectedSalary" class="form-control" />
+                                                <span asp-validation-for="BaseEntry.ExpectedSalary" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="BaseEntry.Comments" class="@col1Style col-form-label">Comments (Personal Notes)</label>
+                                            <div class="@col2Style">
+                                                <textarea asp-for="BaseEntry.Comments" class="form-control" rows="3"></textarea>
+                                                <span asp-validation-for="BaseEntry.Comments" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="@col1Style col-form-label"></div>
+                                            <div class="@col2Style">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>
+    </div>
+
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

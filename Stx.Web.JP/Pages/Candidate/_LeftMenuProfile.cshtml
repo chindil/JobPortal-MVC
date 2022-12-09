@@ -1,0 +1,49 @@
+﻿@*@using AppHelpers*@
+@model dynamic
+
+<div class="col-md-3">
+
+    <div class="list-group bg--light rounded-0 py-1">
+
+        @*Profile Image and Name*@
+        <!--<form class="resume-edit-panel mb-3" asp-page-handler="UploadResume" asp-page="Profile" method="post" enctype="multipart/form-data">
+                <div class="d-flex">-->
+                    @*<input type="hidden" asp-for="BaseEntry.CandidateID" />*@
+
+                    <!--<div class="flex-fill dashboard-thumb mb-3">
+                        <div class="dashboard-th-pic mt-1">
+                            <img src="User.FindFirst(x => x.Type == "profileurl").Value" onerror="this.onerror=null;this.src='/img/avatar.png';"
+                                 class="img-fluid mx-auto img-circle">
+                        </div>
+                        <h6 class="mb-1 text-muted">User.FindFirst(x => x.Type == "username").Value</h6>
+                        <label class="upload-file btn btn-link text-success border-0">
+                            <input type="file" />
+                            <i class="bi-upload me-1"></i> <span class="dsmall">Change Image</span>
+                        </label>
+                    </div>-->
+
+                    @*<div class="avatar-logo-big">
+                            <img src="@(string.IsNullOrWhiteSpace(Model.BaseEntry.NickName)?"/img/avatar.png":"/img/avatar.png")" class="rounded float-start" alt="@Model.BaseEntry.FirstName Profile">
+                        </div>
+                        <div class="ps-3">
+                            <label class="upload-file btn btn-link ">
+                                <input type="file" />
+                                <i class="bi-upload me-1"></i> <span class="dsmall">Change Image</span>
+                            </label>
+                        </div>*@
+                <!--</div>
+        </form>-->
+
+        @{
+            string Iconstyle = "me-3 me-sm-2 me-md-3";
+            <h6 class="list-group-item text-muted mb-2">My Profile & Stats</h6>
+
+            <a class="list-group-item @(Model == "Profile" ? "active" : "")" asp-page="./Profile"><i class="bi-person @Iconstyle"></i><span>Profile</span> </a>
+            <a class="list-group-item @(Model == "Settings" ? "active" : "")" asp-page="./Settings"><i class="bi bi-sliders @Iconstyle"></i><span>Settings</span> </a>
+            <hr class="dropdown-divider py-0 my-1 ms-4 me-1 text-muted">
+            <a class="list-group-item @(Model == "SavedJobs" ? "active" : "")" asp-page="./MySavedJobs"><i class="bi-save @Iconstyle"></i><span>My Saved Jobs</span> </a>
+            <a class="list-group-item @(Model == "Applications" ? "active" : "")" asp-page="./MyApplications"><i class="bi-list-check @Iconstyle"></i><span>My Applications</span> </a>
+            <a class="list-group-item @(Model == "Visibility" ? "active" : "")" asp-page="./MyVisibility"><i class="bi-eye @Iconstyle"></i><span>My Visibility</span> </a>
+        }
+    </div>
+</div>

@@ -1,0 +1,25 @@
+﻿@model ProfileModel
+
+
+    <div class="list-group bg--light rounded-0 py-1">
+        @*Profile Image and Name*@
+        <form class="resume-edit-panel mb-3" asp-page-handler="UploadResume" asp-page="Profile" method="post" enctype="multipart/form-data">
+            <div class="d-flex">
+                @*<input type="hidden" asp-for="BaseEntry.CandidateID" />*@
+
+                <div class="flex-fill dashboard-thumb mb-3">
+                    <div class="dashboard-th-pic mt-1">
+                        <img src="@Model.BaseEntry.DynmcImageUrl" onerror="this.onerror=null;this.src='/img/avatar.png';"
+                             class="img-fluid mx-auto img-circle">
+                    </div>
+                    <h6 class="mb-1 text-muted">@Model.BaseEntry.FirstName @Model.BaseEntry.LastName</h6>
+                    <label class="upload-file btn btn-link text-success border-0">
+                        <input type="file" />
+                        <i class="bi-upload me-1"></i> <span class="dsmall">Change Image</span>
+                    </label>
+                </div>
+
+            </div>
+        </form>
+
+    </div>

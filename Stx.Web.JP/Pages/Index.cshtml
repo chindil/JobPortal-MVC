@@ -1,0 +1,18 @@
+﻿@page
+@using Microsoft.AspNetCore.Authentication
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <h5>Web Portal - Team-B </h5>
+Identity has only implemented in the main identityServer project
+@if (!User.Identity.IsAuthenticated)
+{    
+    <p>Cantidate <a href="/Candidate/Dashboard"> Page </a></p>
+}
+</div>
+
+

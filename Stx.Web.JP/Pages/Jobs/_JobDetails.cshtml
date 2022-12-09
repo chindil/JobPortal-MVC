@@ -1,0 +1,287 @@
+﻿
+@using Stx.Shared.Extensions.Common;
+@model Stx.Shared.Models.HRM.HrJobOrderPreviewDTO
+
+<div class="card job-detail-card">
+    <div class="w-100">
+        @*<img src="..." class="card-img-top" alt="...">*@
+    </div>
+
+    <div class="card-body">
+        <div class="rowd">
+            @if (Model.PrevSendoutID > 0)
+            {
+                <div class="job-bar-alert ">
+                    <i class="bi bi-check-circle text-success"></i>
+                    You have already applied for this job.
+                    <span class="" onclick="this.parentElement.style.display='none';">&times;</span>
+                </div>
+            }
+            <div class="d-flex">
+                <div class="flex-md-grow-1">
+                    <div class="d-flex bd-highlight">
+                        <div class="d-flex flex-column ps-0">
+                            <span class="avatar-logo-big">
+                                <img src="@Model.DynmcImageUrl" alt="@Model.CorporateName" title="@Model.CorporateName Logo">
+                            </span> 
+                        </div>
+
+                        <div class="d-flex flex-column w-100 ps-3">
+                            <div class="d-flex bd-highlight ">
+                                <span class="mb-1 job-detail-title w-100">@Model.Title</span>
+                            </div>
+                            <div class="d-flex mb-1">
+                                <span class="job-detail-company">@Model.CorporateName </span>
+                                <span class="text-muted"> <span class="mx-1">•</span> </span>
+                                <span class="pr-xxsm job-list-line3 text-muted">@Model.CountryName, @Model.Location </span>
+                            </div>
+                            <div class="d-flex mb-1">
+                                <div class="w-100">
+                                    <span class="job-list-salary">
+                                        @Model.Salary.ShowSalaryRanage(Model.SalaryTo, "-", Model.SalaryCurrCD, false)
+                                        <span class="mx-1">•</span>
+                                        Posted @Model.DateStart.TimeAgoNullable(false)
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex mt-2 mb-1 mx-0 px-0">
+                                <form asp-page="Details" method="post">
+                                    <input type="hidden" asp-for="JobOrderID" />
+                                    <input type="hidden" asp-for="CorporateID" />
+                                    <input type="hidden" asp-for="CorporateContact" />
+
+                                    <a asp-page="./Submit" asp-route-jobId="@Model.JobOrderID" target="_blank" class="btn btn-primary me-1 py-1"> Quick Apply </a>
+
+                                    @*Action is handled by JS*@
+                                    <button id="jobactionsubmit" class="btn btn-outline-primary me-1 py-1" type="button"
+                                            data-jobid="@Model.JobOrderID" data-actionname="bookmark">
+                                        @(Model.IsBookmarked.GetValueOrDefault() ? "Unsave" : "Save")
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-shrink-1">
+                    <div class="d-flex flex-column">
+                        <button class="btn btn-outline-secondary job-icon-btn" data-bs-toggle="modal" data-bs-target="#myModalreport" title="Report this job"><i class="bi bi-flag"></i></button>
+                        <button class="btn btn-outline-secondary job-icon-btn" data-bs-toggle="modal" data-bs-target="#myModalviewappstat" title="View application stat"><i class="bi bi-file-bar-graph"></i></button>
+                        @*<button class="btn btn-outline-secondary job-icon-btn" data-bs-toggle="modal" data-bs-target="#myModalsave" title="Save the job"><i class="bi-heart"></i></button>*@
+                        <button class="btn btn-outline-secondary job-icon-btn" data-bs-toggle="modal" data-bs-target="#myModalalert" title="Share this job"><i class="bi bi-share"></i></button>
+                        <button class="btn btn-outline-secondary job-icon-btn" data-bs-toggle="modal" data-bs-target="#myModalalert" title="Create a job alert"><i class="bi bi-bell"></i></button>
+
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mt-2 mb-2 mx-0 text-muted" />
+        </div>
+
+        <!-- #region Selected Job Details - Right -->
+        <div class="col-md-12 row ps-3">
+            <div class="col-md-6 small">
+                <p class="mb-1">Job Industry: @Model.JobIndustry</p>
+                <p class="mb-1">Job Specialty: @Model.JobSpecialty</p>
+            </div>
+            <div class="col-md-6 small">
+                <p class="mb-1">Employment Type: @Model.EmploymentType</p>
+                <p class="mb-1">Closing On: @Model.DateEnd?.ToString("dd MMM yyyy")</p>
+            </div>
+        </div>
+
+        <div class="col-md-12 row mt-3">
+            <p class="job-detail-section">Description</p>
+            <p class="job-detail">@Model.Description</p>
+
+            <p class="job-detail-section">Requirements</p>
+            <p class="job-detail"> @Model.Requirements</p>
+
+            @if (!string.IsNullOrWhiteSpace(@Model.TravelRequirements))
+            {
+                <p class="job-detail-section">Travel Requirements</p>
+                <p class="job-detail">@Model.TravelRequirements</p>
+            }
+        </div>
+
+        <!-- #endregion -->
+    </div>
+
+</div>
+
+
+<!-- #region MODAL FORMS============================================= -->
+
+<div class="modal fade" id="quickApplyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-page-handler="SubmitApplication" asp-page="./Details" method="post">
+                    <input type="hidden" asp-for="JobOrderID" id="mJobOrderID" />
+                    <input type="hidden" asp-for="CorporateID" id="mCorporateID" />
+                    <input type="hidden" asp-for="CandidateID" id="mCandidateID" />
+                    <input type="hidden" asp-for="CorporateContact" id="mCorporateContact" />
+                    <p>Title: @Model.Title</p>
+                    <p>JobCode: @Model.JobCode</p>
+                    <p>JobHoursPerWeek: @Model.JobHoursPerWeek</p>
+                    <p>Location: @Model.Location</p>
+                    @*<p>MinEducationLevel: @Model.MinEducationLevel</p>
+                        <p>MinYearsExpRequired: @Model.MinYearsExpRequired</p>*@
+                    <p>NumOfAvilJobs: @Model.NumOfAvilJobs</p>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalApply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Submit Application</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <form asp-page-handler="SubmitApplication" asp-page="./Details" method="post">
+                <div class="modal-body">
+                    <input type="hidden" asp-for="JobOrderID" id="mJobOrderID" />
+                    <input type="hidden" asp-for="CorporateID" id="mCorporateID" />
+                    <input type="hidden" asp-for="CandidateID" id="mCandidateID" />
+                    <input type="hidden" asp-for="CorporateContact" id="mCorporateContact" />
+                    <p>Title: @Model.Title</p>
+                    <p>JobCode: @Model.JobCode</p>
+                    <p>JobHoursPerWeek: @Model.JobHoursPerWeek</p>
+                    <p>Location: @Model.Location</p>
+                    @*<p>MinEducationLevel: @Model.MinEducationLevel</p>
+                        <p>MinYearsExpRequired: @Model.MinYearsExpRequired</p>*@
+                    <p>NumOfAvilJobs: @Model.NumOfAvilJobs</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalalert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="d-flex flex-column">
+                    <h5 class="modal-title" id="exampleModalLabel">Create a job alert</h5>
+                    <label class="radio-inline fw-bold">Get notified for similar job posting.</label>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <form asp-page-handler="JobAction" asp-page="./Details" method="post">
+                <div class="modal-body">
+                    <div class="d-flex flex-column ps-2">
+                        <input type="hidden" name="actionname" value="alert" />
+                        <input type="hidden" asp-for="JobOrderID" id="JobOrderID1" />
+                        <label class="radio-inline">
+                            <input type="radio" name="actionvalue" id="actionvalue1" value="Y" checked> Yes, Create a job alert.
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="actionvalue" id="actionvalue2" value="N"> No
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalreport" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="d-flex flex-column">
+                    <h5 class="modal-title" id="exampleModalLabel">What's wrong with this job posting?</h5>
+                    <label class="radio-inline fw-bold">Help us understand what's happening with this job posting.</label>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+
+            <form asp-page="./Details" method="post">
+                <div class="modal-body">
+                    <div class="d-flex flex-column ps-2">
+                        <input type="hidden" name="actionname" value="report" />
+                        <input type="hidden" asp-for="JobOrderID" id="JobOrderID2" />
+                        <label class="radio-inline">
+                            <input type="radio" name="radioActionReport" value="spam"> It's a Spam
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radioActionReport" value="abuse"> It's a Abuse
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radioActionReport" value="violent"> It's Violent
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radioActionReport" value="Inappropriate"> It has an Inappropriate content
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radioActionReport" value="other"> Other Reason
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="button" id="jobActionReportSubmit" 
+                            data-jobid="@Model.JobOrderID" data-actionname="report">
+                        submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModalviewappstat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View Application Stat</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <form asp-page-handler="JobAction" asp-page="./Details" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="actionname" value="view-app-stat" />
+                    <input type="hidden" asp-for="JobOrderID" id="JobOrderID3" />
+                    <label class="radio-inline">
+                        <input type="radio" name="actionvalue" id="actionvalueY1" value="Y"> Yes
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="actionvalue" id="actionvalueN2" value="N"> No
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

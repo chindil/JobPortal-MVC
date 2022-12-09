@@ -1,0 +1,188 @@
+﻿@page
+@model Stx.Web.JP.Pages.Candidate.EducationModel
+
+<section class="min-sec">
+    <div class="container">
+
+        <partial name="_StatusMessage" for="StatusMessage" />
+
+        <form id="resumeModify" method="post"></form>
+        <div class="row">
+            <partial name="_LeftMenuResume" for="PageKey" />
+
+            @if (Model.PageStatus.IsDisplyErrorBanner)
+            {
+                <div class="col-md-9">
+                    <partial name="_StatusBanner" for="PageStatus" />
+                </div>
+            }
+            else
+            {
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex bd-highlight ">
+                                <h4 class="card-title flex-grow-1" id="repeat-form">Education</h4>
+                                <button class="btn btn-outline-primary btn-sm py-1 me-3" value="-1" form="resumeModify" asp-route-id="-1" asp-page-handler="AddEditEntity">
+                                    <i class="bi-plus pe-1"></i><span>Add New</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-content collapse show">
+                            <div class="card-body">
+                                @if (Model.Input != null && Model.Input.ID != 0)
+                                {
+                                    string col1Style = "col-sm-3";
+                                    string col2Style = "col-sm-6";
+                                    <form class="resume-edit-panel" method="post" asp-page-handler="SubmitEntry">
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                        <input type="hidden" asp-for="Input.ID" />
+                                        <input type="hidden" asp-for="Input.CandidateID" />
+
+                                        <div class="row mb-3">
+                                            <label asp-for="Input.QualificationType" class="@col1Style col-form-label">Qualification Type</label>
+                                            <div class="@col2Style">
+                                                <select asp-for="Input.QualificationType" class="form-select">
+                                                    <option selected>Open this select menu</option>
+                                                    <option value="1">One</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+                                                <span asp-validation-for="Input.QualificationType" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="Input.QualificationName" class="@col1Style col-form-label">Qualification</label>
+                                            <div class="@col2Style">
+                                                <input asp-for="Input.QualificationName" class="form-control">
+                                                <span asp-validation-for="Input.QualificationName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="Input.Institute" class="@col1Style col-form-label"></label>
+                                            <div class="@col2Style">
+                                                <input asp-for="Input.Institute" class="form-control">
+                                                <span asp-validation-for="Input.Institute" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="Input.Country" class="@col1Style col-form-label"></label>
+                                            <div class="@col2Style">
+                                                <select asp-for="Input.Country" class="form-select">
+                                                    <option selected>Open this select menu</option>
+                                                    <option value="1">One</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+                                                <span asp-validation-for="Input.Country" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="Input.DateStarted" class="@col1Style col-form-label"></label>
+                                            <div class="@col2Style">
+                                                <input asp-for="Input.DateStarted" class="form-control" type="date">
+                                                <span asp-validation-for="Input.DateStarted" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="Input.DateGraduated" class="@col1Style col-form-label"></label>
+                                            <div class="@col2Style">
+                                                <input asp-for="Input.DateGraduated" class="form-control" type="date">
+                                                <span asp-validation-for="Input.DateGraduated" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="Input.FieldOfStudy" class="@col1Style col-form-label"></label>
+                                            <div class="@col2Style">
+                                                <input asp-for="Input.FieldOfStudy" class="form-control">
+                                                <span asp-validation-for="Input.FieldOfStudy" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="Input.Grade" class="@col1Style col-form-label"></label>
+                                            <div class="@col2Style">
+                                                <input asp-for="Input.Grade" class="form-control" required>
+                                                <span asp-validation-for="Input.Grade" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="Input.Comments" class="@col1Style col-form-label"></label>
+                                            <div class="@col2Style">
+                                                <input asp-for="Input.Comments" class="form-control">
+                                                <span asp-validation-for="Input.Comments" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="Input.Active" class="@col1Style col-form-label">Active</label>
+                                            <div class="@col2Style">
+                                                @Html.CheckBox("form-control", @Model.Input?.Active ?? false, "form-control")
+                                                <span asp-validation-for="Input.Active" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="@col1Style col-form-label"></div>
+                                            <div class="@col2Style">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                <button class="btn btn-link py-1 px-2" asp-page-handler="AddEditEntityCancel">Cancel</button>
+                                            </div>
+                                        </div>
+                                        <hr class="pb-1 my-4" />
+
+                                    </form>
+                                }
+
+                                @foreach (var entry in Model.BaseEntryList)
+                                {
+                                    var entryId = entry.ID;
+                                    <div class="row mb-4">
+                                        <div class="col-sm-12 col-md-11 col-md-10 ms-sm-2 ms-md-4 ms-lg-4">
+
+                                            <div class="d-flex flex-column w-100 px-2">
+                                                <div class="d-flex bd-highlight ">
+                                                    <div class="w-100">
+                                                        <h5 class="qa-skill-title mb-1"><span>@entry.QualificationName</span></h5>
+                                                        <h6 class="my-0 pb-1"><span class="qa-subtitle">@entry.Institute</span></h6>
+                                                    </div>
+                                                    <div class="flex-shrink-1 flex-nowrap ps-1">
+                                                        <div class="d-flex nowrap">
+                                                            <button class="btn btn-link py-1 px-2" value="@entryId" form="resumeModify" asp-route-id="@entryId" asp-page-handler="AddEditEntity">
+                                                                <i class="bi-pencil"></i>
+                                                            </button>
+
+                                                            <form asp-page-handler="DeleteEntity" method="post" onclick="return confirm('Are you sure you want to delete this?')">
+                                                                <button type="submit" class="btn btn-link py-1 px-2" value="@entryId" asp-route-id="@entryId" asp-page-handler="DeleteEntity">
+                                                                    <i class="bi-close"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p class="my-0 py-0"><span class="job-list-line3 text-muted">@entry.Country </span></p>
+                                                <div class="d-flex my-0 py-0">
+                                                    <div class="pr-xxsm w-100">
+                                                        <span class="job-list-salary">@entry.DateStarted?.ToString("MMM yyyy") - @entry.DateGraduated.ToString("MMM yyyy")</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <div class="text-muted small">@entry.Comments</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

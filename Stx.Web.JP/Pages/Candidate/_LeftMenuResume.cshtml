@@ -1,0 +1,21 @@
+﻿@*@using AppHelpers*@
+@model string
+
+<div class="col-md-3">
+    <div class="list-group bg--light rounded-0 py-1">
+        @{
+            string Iconstyle = "me-3 me-sm-2 me-md-3";
+            <h6 class="list-group-item text-muted mb-2">My Resume</h6>
+            <a class="list-group-item @(Model == "Resume" ? "active" : "")" asp-page="./Resume"><i class="bi-eye @Iconstyle"></i><span>Preview My Resume</span> </a>
+            <hr class="dropdown-divider py-0 my-1 ms-4 me-1 text-light">
+            <a class="list-group-item @(Model == "AdditnlInfo" ? "active" : "")" asp-page="./AdditionalInfo"><i class="bi bi-info-circle @Iconstyle"></i><span>Candidate Info</span> </a>
+            <a class="list-group-item @(Model == "Experience" ? "active" : "")" asp-page="./Experience"><i class="bi-briefcase @Iconstyle"></i><span>Experience</span> </a>
+            <a class="list-group-item @(Model == "Education" ? "active" : "")" asp-page="./Education"><i class="bi-book @Iconstyle"></i><span>Education</span> </a>
+            <a class="list-group-item @(Model == "Certificate" ? "active" : "")" asp-page="./Certificate"><i class="bi bi-patch-check @Iconstyle"></i><span>Certificate</span> </a>
+            <a class="list-group-item @(Model == "Skill" ? "active" : "")" asp-page="./Skills"><i class="bi bi-shield-check @Iconstyle"></i><span>Skills</span> </a>
+            <a class="list-group-item @(Model == "ResumeStore" ? "active" : "")" asp-page="./ResumeStore"><i class="bi bi-collection @Iconstyle"></i><span>Resume Store</span> </a>
+            <hr class="dropdown-divider py-0 my-1 ms-4 me-1 text-light">
+            <a class="list-group-item @(Model == "ResumePref" ? "active" : "")" asp-page="./ResumePreference"><i class="bi bi-sliders @Iconstyle"></i><span>Preferences</span> </a>
+        }
+    </div>
+</div>

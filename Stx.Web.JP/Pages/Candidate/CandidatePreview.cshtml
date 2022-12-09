@@ -1,0 +1,169 @@
+﻿@page
+@model Stx.Web.JP.Pages.Candidate.CandidatePreviewModel
+@{
+    ViewData["Title"] = "CandidatePreview";
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-3">
+            <p>status: @Model.InputModel.Active</p>
+            <p>Address: @Model.InputModel.Address</p>
+            <p>address2: @Model.InputModel.Address2</p>
+            <p>city: @Model.InputModel.City</p>
+            <p>current company: @Model.InputModel.CurrCompanyName</p>
+            <p>current company url: @Model.InputModel.CurrCompanyURL</p>
+            <p>current occupation: @Model.InputModel.CurrOccupation</p>
+            <p>date added: @Model.InputModel.DateAdded</p>
+
+            <p>phone: @Model.InputModel.Phone</p>
+            <p>phone 2: @Model.InputModel.Phone2</p>
+            <p>postal code: @Model.InputModel.PostalCode</p>
+
+        </div>
+        <div class="col-md-3">
+            <p>date available: @Model.InputModel.DateAvailable</p>
+            <p>date next call: @Model.InputModel.DateNextCall</p>
+            <p>date of birth: @Model.InputModel.DateOfBirth</p>
+            <p>description: @Model.InputModel.Description</p>
+            <p>disability: @Model.InputModel.Disability</p>
+
+            <p>email: @Model.InputModel.Email</p>
+            <p>email 2: @Model.InputModel.Email2</p>
+
+            <p>prefered contact modes: @Model.InputModel.PreferredContactModes</p>
+            <p>prefered locations: @Model.InputModel.PreferredLocations</p>
+            <p>primary skills: @Model.InputModel.PrimarySkills</p>
+            <p>privacy: @Model.InputModel.Privacy</p>
+        </div>
+
+        <div class="col-md-3">
+
+            <p>max expected salary: @Model.InputModel.ExpectedSalary</p>
+            <p>min expected salary: @Model.InputModel.ExpectedSalaryLow</p>
+            <p>experience level: @Model.InputModel.ExperienceLevel</p>
+
+            <p>external id: @Model.InputModel.ExternalID</p>
+            <p>fax: @Model.InputModel.Fax</p>
+            <p>fax 2: @Model.InputModel.Fax2</p>
+            <p>first name: @Model.InputModel.FirstName</p>
+            <p>gender: @Model.InputModel.Gender</p>
+            <p>highest education level: @Model.InputModel.HighestEduLevel</p>
+            <p>job industry: @Model.InputModel.JobIndustry</p>
+
+            <p>secondary address: @Model.InputModel.SecondaryAddress</p>
+            <p>secondary skills: @Model.InputModel.SecondarySkills</p>
+
+            <p>specialities: @Model.InputModel.Specialties</p>
+        </div>
+        <div class="col-md-3">
+            <p>last name: @Model.InputModel.LastName</p>
+            <p>middle name: @Model.InputModel.MiddleName</p>
+            <p>mobile: @Model.InputModel.Mobile</p>
+            <p>name prefix: @Model.InputModel.NamePrefix</p>
+            <p>name suffix: @Model.InputModel.NameSuffix</p>
+            <p>nationality id: @Model.InputModel.Nationality</p>
+            <p>nick name: @Model.InputModel.NickName</p>
+
+            <p>total experience: @Model.InputModel.TotalExperience</p>
+            <p>username: @Model.InputModel.UserName</p>
+            <p>workphone: @Model.InputModel.WorkPhone</p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-4">
+            <h3> Educations list</h3>
+            <ul>
+                @foreach (var item in Model.InputModel.Educations)
+                {
+                    <li>City @item.City</li>
+                    <li>Comments @item.Comments</li>
+                    <li>Country @item.Country</li>
+                    <li>DateExpiration @item.DateExpiration</li>
+                    <li>DateGraduated @item.DateGraduated</li>
+                    <li>DateStarted @item.DateStarted</li>
+                    <li>FieldOfStudy @item.FieldOfStudy</li>
+                    <li>Gpa @item.Gpa</li>
+                    <li>Grade @item.Grade</li>
+                    <li>institute @item.Institute</li>
+                    <li>InstituteUnit @item.InstituteUnit</li>
+                    <li>Major @item.Major</li>
+                    <li>QualificationName @item.QualificationName</li>
+                    <li>QualificationType @item.QualificationType</li>
+                    <li>
+                        <br />
+                        <hr />
+                    </li>
+
+                }
+
+            </ul>
+
+        </div>
+        <div class="col-md-4">
+            <h3> Experiences list</h3>
+            <ul>
+                @foreach (var item in Model.InputModel.Experiences)
+                {
+                    <li>Active @item.Active</li>
+                    <li>Bonus @item.Bonus</li>
+                    <li>Comments @item.Comments</li>
+                    <li>Commission @item.Commission</li>
+                    <li>CompanyName @item.CompanyName</li>
+                    <li>Country @item.Country</li>
+                    <li>DateAdded @item.DateAdded</li>
+                    <li>DateEnd @item.DateEnd</li>
+                    <li>DateStart @item.DateStart</li>
+                    <li>Description @item.Description</li>
+                    <li>IsCurrentJob @item.IsCurrentJob</li>
+                    <li>JobOrderID @item.JobOrderID</li>
+                    <li>PlacementID @item.PlacementID</li>
+                    <li>Salary @item.Salary</li>
+                    <li>SalaryCycle @item.SalaryCycle</li>
+                    <li>TerminationReason @item.TerminationReason</li>
+                    <li>Title @item.Title</li>
+                    <li>
+                        <br />
+                        <hr />
+                    </li>
+
+
+
+                }
+            </ul>
+        </div>
+
+        <div class="col-md-4">
+            <h3> Certificates list</h3>
+            <ul>
+                @foreach (var item in Model.InputModel.Certificates)
+                {
+                    <li>Active @item.Active</li>
+                    <li>Comments @item.Comments</li>
+                    <li>DateAdded @item.DateAdded</li>
+                    <li>Description @item.Description</li>
+                    <li>CertificateName @item.CertificateName</li>
+                    <li>DateCertified @item.DateCertified</li>
+                    <li>DateExpiration @item.DateExpiration</li>
+                    <li>FileAttachments @item.FileAttachments</li>
+                    <li>IsPending @item.IsPending</li>
+                    <li>IssuedBy @item.IssuedBy</li>
+                    <li>IssuerCountry @item.Country</li>
+                    <li>LicenseNumber @item.LicenseNumber</li>
+                    <li>LicenseType @item.LicenseType</li>
+                    <li>Results @item.Results</li>
+                    <li>Status @item.Status</li>
+                    <li>
+                        <br />
+                        <hr />
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+

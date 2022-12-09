@@ -1,0 +1,58 @@
+﻿@page
+@*@model Stx.Web.JP.Pages.Jobs._JobSubmitModel*@
+@*@model string*@
+@model Stx.Shared.Models.HRM.HrJobOrderPreviewDTO
+
+@{
+}
+
+@if (@Model == null)
+{
+<div>
+    Loading ......................
+</div>
+}
+else
+{
+
+
+<div class="">
+
+    <div class="row">
+        <div class="col-6 d-flex">
+            <div class="dashboard-th-pic mt-1">
+                <img src="@(string.IsNullOrWhiteSpace(@Model.Address2) ? "/img/avatar.png" : "/img/avatar.png")" class="img-fluid mx-auto img-circle" alt="">
+            </div>
+            <div class="">
+
+                <h6 class="mb-1 text-muted">@Model.CorporateName @Model.Address</h6>
+                <label class="text-muted">
+                    @Model.CorporateName
+                </label>
+            </div>
+        </div>
+        <div class="col-6">
+            <label class="text-muted"> @Model.Title</label>
+            <label class="text-muted"> @Model.Title</label>
+        </div>
+    </div>
+
+    <div class="">
+        <h6 class="">Resume</h6>
+        <div class="d-inline-flex">
+            <label>Select a resume </label>
+            <select> Select a resume </select>
+            <span>or <a href="#">Update Resume</a></span>
+        </div>
+    </div>
+
+    <div class="">
+        <h6 class="">Cover Letter</h6>
+        <div class="d-inline-flex">
+            <textarea rows="3"> </textarea>
+        </div>
+    </div>
+
+</div>
+}
+

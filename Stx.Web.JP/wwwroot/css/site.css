@@ -1,0 +1,598 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+
+.medium{
+    font-size:0.925rem
+}
+    .medium button, .medium a, .medium span, .medium p, .medium label, .medium input, .medium text, .medium textarea, .medium select, .medium * {
+        font-size: 0.925rem
+    }
+
+@media (min-width: 768px) {
+    html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html, body {
+/*    height: 100%;
+    height: 100vh;*/
+}
+
+html {
+    position: relative;
+    /*min-height: 100%;*/
+    background: #fff;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    /* Margin bottom by footer height */
+    background: #fff;
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    height: 100%;
+}
+
+.footer {
+    width: 100%;
+    flex-shrink: 0;
+    margin-top: auto;
+}
+
+
+/* Sign in & up Form -------------------------------------------------- */
+
+#account-form {
+    /*  width: 412px;
+        margin: 10vh auto;
+        background-color: #FCFBFB;
+        border-radius: 2px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.24);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        
+        justify-content: center;
+    */
+    min-width: 312px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 20px;
+}
+
+#account-form-content {
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    background: #FCFBFB;
+    width: 100%;
+    max-width: 400px;
+    min-width: 300px;
+    position: relative;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    text-align: center;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+    #account-form-content form {
+        width: 100%;
+        max-width: 410px;
+        padding: 30px;
+        margin: auto;
+    }
+
+    #account-form-content .form-control {
+        position: relative;
+        box-sizing: border-box;
+        height: auto;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+        #account-form-content .form-control:focus {
+            z-index: 2;
+        }
+
+    #account-form-content input[type="email"] {
+        border-radius: 0;
+    }
+
+    #account-form-content input[type="password"] {
+        border-radius: 0;
+    }
+
+    #account-form-content .social-login {
+        width: 390px;
+        margin: 0 auto;
+        margin-bottom: 14px;
+    }
+
+    #account-form-content .social-btn {
+        font-weight: 100;
+        color: white;
+        width: 190px;
+        font-size: 0.9rem;
+    }
+
+    #account-form-content .linktext {
+        display: block;
+        color: lightseagreen;
+        font-size: 0.95rem;
+    }
+
+    #account-form-content a {
+        display: block;
+    }
+
+#logreg-form .lines {
+    width: 200px;
+    border: 1px solid red;
+}
+
+
+#account-form-content button {
+    margin-top: 5px;
+}
+
+
+#account-form-content .social-btn {
+    width: 210px;
+}
+
+#account-form-content input {
+    margin-bottom: 4px;
+    border-radius: 0;
+}
+
+.form-signup .social-login {
+    width: 210px !important;
+    margin: 0 auto;
+}
+
+#account-form-content .signinbutton {
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: bold;
+    text-align: center;
+    background: #1a99d5;
+    transition: background-color 0.3s;
+    border-radius: 1px;
+    border: 0;
+    cursor: pointer;
+    outline: none;
+    padding: 9px 10px 13px 10px;
+    margin-top: 20px;
+}
+
+#account-form-content .signupbutton {
+    border-radius: 1px;
+    border: 0;
+    opacity: 0.8;
+}
+
+.social-btn .btn {
+    border: 1px solid #507cc0;
+    margin: 10px 3px 0;
+    background: #0000;
+    border-radius: 0px;
+    padding: 9px 10px 13px 10px;
+}
+
+    .social-btn .btn:hover {
+        opacity: 0.9;
+    }
+
+.social-btn .btn-primary {
+    background: #507cc0;
+}
+
+.social-btn .btn-info {
+    background: #64ccf1;
+}
+
+.social-btn .btn-danger {
+    background: #df4930;
+}
+
+.social-btn-login {
+    border: 1px solid #e6e6e6;
+    border-radius: 0px;
+    line-height: 8px;
+    margin: 4px 4px 4px 4px;
+    padding: 8px 0 8px 0;
+    width: calc((100% - 20px)/2);
+}
+
+    .social-btn-login:hover {
+        background: #0000;
+        color: #d33f8d;
+        border: 1px solid #d33f8d;
+    }
+
+.social-btn-signup {
+    border-radius: 0px;
+    line-height: 8px;
+    margin: 8px;
+    padding: 8px 0 8px 0;
+    width: calc((100% - 20px) - 30px);
+}
+
+.or-seperator {
+    margin-top: 30px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    font-size: small;
+}
+
+    .or-seperator i {
+        padding: 0 10px;
+        background: #f7f7f7;
+        position: relative;
+        top: -11px;
+        z-index: 1;
+    }
+
+.or-seperator-btm {
+    padding: -5px;
+    margin-left: -30px;
+    margin-right: -30px;
+    margin-top: 30px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    font-size: small;
+}
+
+    .or-seperator-btm i {
+        padding: 0 10px;
+        background: #f7f7f7;
+        position: relative;
+        top: -11px;
+        z-index: 1;
+    }
+/* Sign in & up Form END-------------------------------------------------- */
+
+
+
+/*Job Search-------------------------------------------------- */
+.sidebar-list-single {
+    -webkit-transition: all 0.4s ease 0s;
+    display: block;
+    margin-bottom: 0px;
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #eee;
+    transition: all 0.4s ease 0s;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 5px;
+    padding-bottom: 0px;
+    border: none;
+    border-radius: 0px;
+    /*border-bottom: solid 1px #e1e1e1;*/
+    border-spacing: 50px;
+}
+
+.bg-white
+{
+    background:#fff;
+}
+
+.avatar-nav-menu {
+    width: 32px;
+    height: 32px;
+}
+
+.avatar-small {
+    width: 48px;
+    height: 48px;
+    margin: 2em auto 0.4em;
+    box-shadow: 0px 4px 6px 2px #e5e6ea;
+    border-radius: 50%;
+}
+
+.avatar-big {
+    width: 80px;
+    height: 80px;
+    margin: 2em auto 0.4em;
+    box-shadow: 0px 4px 6px 2px #e5e6ea;
+    border-radius: 50%;
+}
+
+.avatar-xl {
+    width: 120px;
+    height: 120px;
+    margin: 2em auto 0.4em;
+    box-shadow: 0px 4px 6px 2px #e5e6ea;
+    border-radius: 50%;
+}
+
+.avatar-logo img {
+    height: 48px;
+    width: 48px;
+    border: 1px solid #eee;
+}
+
+.avatar-logo-big img {
+    height: 80px;
+    width: 80px;
+    border: 1px solid #ddd;
+}
+
+
+.job-icon-btn {
+    /*background-color: white !important;*/ 
+
+    border: none;
+    border-bottom: 1px solid #eee;
+    color: #8d97ad;
+    padding: 0px;
+    margin-bottom: 1px;
+    font-size: 16px;
+    width: 36px;
+    height: 30px;
+    border-radius:0;
+}
+
+.job-bookmark i{
+    color: #aaa;
+}
+
+.job-bar-alert {
+    padding: 4px 8px;
+    margin: 8px 0px;
+    background-color: #fafa9b;
+    font-size: 12px;
+    color: #222;
+    border: 1px solid #eee;
+}
+.job-bar-alert i {
+    padding: 0px 4px;
+    font-size: 14px;
+}
+    .job-bar-alert span {
+        color: #555;
+        font-weight: 400;
+        float: right;
+        font-size: 18px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+        padding:0 2px;
+    }
+
+/*Job Search END-------------------------------------------------- */
+/*Begin: Custom Theme Styles*/
+/*To address scroll bars for left & right separetly*/
+.job-list {
+    background-color: lightblue;
+    position: relative;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.text-theme-link {
+    color: #277f6a !important;
+    text-decoration: none !important;
+}
+
+.text-theme {
+    color: #277f6a !important;
+}
+
+.text-theme-dark {
+    color: #1a5e4e !important;
+}
+
+.text-theme-black {
+    color: #333e49 !important;
+}
+.text-job-question, .text-job-question a, .text-job-question label, .text-job-question input, .text-job-question select {
+    color: #181d22 !important;
+    font-size: 13px;
+    font-weight: 600;
+}
+.text-job-question label
+{
+    margin-bottom:2px;
+}
+
+.job-list-title {
+    font-size: 16px;
+    font-weight: 700;
+    /*color: #277f6a !important;*/
+    color: #222 !important;
+}
+.job-list-line2 {
+    font-size: 14px;
+    font-weight: 600;
+    /*color: #505863 !important;*/
+    color: #019446 !important;
+}
+.job-list-line3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #8d97ad !important;
+}
+.job-list-salary {
+    font-size: 12px;
+    font-weight: 500;
+    color: #8d97ad !important;    
+}
+.job-list-time{
+    font-size: 12px;
+    color: #8d97ad !important;
+}
+
+.job-detail-section {
+    font-size: 14px;
+    font-weight:700;
+    color: #333e49 !important;
+}
+.job-detail {
+    font-size: 15px;
+    color: #333e49 !important;
+}
+.job-detail-title {
+    font-size: 20px;
+    font-weight:700;
+    color: #333e49 !important;
+}
+.job-detail-company {
+    font-size: 14px;
+    font-weight:600;
+    color: #00a94f !important;
+}
+.job-detail-card {
+  border: none;
+}
+
+.job-submit-resume {
+    width: max-content;
+    min-width: 200px;
+}
+
+.job-filter-dropdown {
+    font-size: 13px;
+    transition: all 0.4s;
+}
+    .job-filter-dropdown .filter-group {
+        margin: 0.25rem 2rem 0.5rem 2.5rem;
+        min-width: 200px;
+    }
+    .job-filter-dropdown .group-title {
+        font-size: 14px;
+        font-weight: 700;
+        margin: 0.5rem 1.75rem 0.25rem 1.75rem;
+    }
+    .job-filter-dropdown .filter-group-button{
+        margin: 1.5rem 2rem 0.5rem 0rem;
+    }
+
+    .job-filter-dropdown label {
+        font-size: 14px;
+    }
+
+    .job-filter-dropdown button {
+        padding: 4px 8px;
+        border-radius: 2px;
+        background: rgba(255,255,255,0.15);
+        font-size: 13px;
+        color: #ddd;
+    }
+    .job-filter-dropdown .checkbox-button {
+        padding: 4px 8px;
+        border-radius: 2px;
+        background: rgba(255,255,255,0.15);
+        font-size: 13px;
+        color: #ddd;
+        border: 2px solid transparent!important;
+    }
+    .job-filter-dropdown .job-filter-button-apply {
+        font-size: 13px;
+        min-width: 100px;
+        transition: all 0.4s;
+        color: #fff;
+    }
+    .job-filter-dropdown .job-filter-button-clear {
+        font-size: 13px;
+        min-width: min-content;
+        color: #aaa;
+        transition: all 0.4s;
+        border: 1px solid;
+    }
+
+.form-check.checkbox-md {
+    margin-bottom: 0.4rem; 
+}
+    .form-check.checkbox-md .form-check-input {
+        height: 1.25rem;
+        width: 1.25rem;
+    }
+    .form-check.checkbox-md .form-check-label {
+        margin-left: 6px;
+    }
+
+.form-check.radio-md {
+    margin-bottom: 0.4rem; 
+}
+    .form-check.radio-md .form-check-input {
+        height: 1.25rem;
+        width: 1.25rem;
+    }
+    .form-check.radio-md .form-check-label {
+        margin-left: 6px;
+    }
+
+/*End: Custom Theme Styles*/
+
+
+/*#region Error Panel & Page */
+
+.center-image img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.error-banner img {
+    width:100%;
+    max-width: max-content;
+}
+
+/*#endregion */

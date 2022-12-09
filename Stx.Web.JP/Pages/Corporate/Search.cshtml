@@ -1,0 +1,102 @@
+﻿@page
+@using Stx.Shared.Extensions.Common;
+@model Stx.Web.JP.Pages.Corporate.SearchModel
+@{
+}
+
+<!-- ============================ Main Banner  Start================================== -->
+<div class="hero-header jumbo-banner half-header hero-header-Short" style="background: url(@Url.Content("/img/banner-2.jpg")) ;" data-overlay="6">
+    <div class="container">
+        <p class="lead">Find companies and their job listing</p>
+        <div class="col-sm-12 col-md-11 col-lg-9 ">
+
+            <form class="search-big-form no-border search-shadow" method="post">
+                <div class="row m-0">
+                    <div class="col-lg-5 col-md-5 col-sm-12 p-0">
+                        <div class="form-group">
+                            <i class="bi bi-search"></i>
+                            <input type="text" name="keyword" class="form-control b-r" asp-for="Keyword" placeholder="Company name or Keyword">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-3 col-sm-12 p-0">
+                        <div class="form-group">
+                            <i class="bi bi-geo-alt"></i>
+                            <input type="text" name="location" class="form-control b-r" asp-for="Location" placeholder="Location">
+                        </div>
+                    </div>
+
+                    @*<div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                        <div class="form-group">
+                            <i class="bi-briefcase"></i>
+                            <input type="text" name="jobindustry" class="form-control b-r" asp-for="SearchParms.JobIndustries" placeholder="Job Industry">
+                        </div>
+                        </div>*@
+
+                    <div class="col-lg-3 col-md-4 col-sm-12 p-0">
+                        <input type="submit" value="Search" class="btn btn-primary full-width" asp-page-handler="Search" />
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- ============================ Main Banner End ================================== -->
+
+<section class="min-sec h-100">
+    <div class="container">
+        <partial name="_StatusMessage" for="StatusMessage" />
+
+        <form id="resumeModify" method="post"></form>
+        <h5 class="text-muted">Search results</h5>
+        @if (Model.BaseEntry == null || Model.BaseEntry.Count == 0)
+        {
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+                No data found
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                @foreach (var item in Model.BaseEntry)
+                {
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="classic-joblist ultimate-center d-flex flex-column">
+
+                            @*<div class="d-flex cl-job-intro">
+                                    <span class="me-auto cl-jb-type green">Featured</span>
+                                    <span class="cl-jb-type orange">Featured</span>
+                                </div>*@
+
+                            <div class="cl-job-employer">
+                                <div class="cljb-emp-thumg">
+                                    <a asp-page="./Details" asp-route-CorporateID="@item.CorporateID"><img src="@(item.Source.IsNothing("/img/company-avatar.png"))" alt=""></a>
+                                </div>
+                                <div class="cljb-emp-detail">
+                                    <h5 class="mb-1"><a asp-page="./Details" asp-route-CorporateID="@item.CorporateID">@item.Name</a></h5>
+                                    <div class="d-flex flex-column">
+                                        <span class="cl-jb-loaction"><i class="bi-location-pin"></i>@item.CountryName.JoinIfNotEmpty(", ", @item.City)</span>
+                                        <span class="cl-jb-date"><i class="bi-briefcase"></i>@item.Category</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cl-job-intro mt-auto">
+                                <span class="me-auto cl-jb-type green">Featured</span>
+                                <a asp-page="../Jobs/Search" asp-page-handler="SearchByCorpID" asp-route-CorporateID="@item.CorporateID"
+                                   class="btn btn-outline-info btn-rounded btn-sm py-1">View Job Listing</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+
+</section>
+
+
+

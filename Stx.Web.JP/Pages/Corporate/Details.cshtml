@@ -1,0 +1,37 @@
+﻿@page
+@model Stx.Web.JP.Pages.Corporate.DetailsModel
+@{
+}
+
+<section class="min-sec h-100">
+    <div class="container">
+        <partial name="_StatusMessage" for="StatusMessage" />
+        <h5>Corporate Details </h5>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <p>Address: @Model.InputModel.Address</p>
+                    <p>address2: @Model.InputModel.Address2</p>
+                    <p>address2: @Model.InputModel.Category</p>
+                    <p>City: @Model.InputModel.City</p>
+                    <p>CommercialRegInfo: @Model.InputModel.CommercialRegInfo</p>
+                    <p>CommercialRegNum: @Model.InputModel.CommercialRegNum</p>
+                    <p>CompanyLawyers: @Model.InputModel.CompanyLawyers</p>
+                    <p>CorporateGroup: @Model.InputModel.CorporateGroup</p>
+                    <p>CorporateType: @Model.InputModel.CorporateType</p>
+                    <p>CountryName: @Model.InputModel.CountryName</p>
+                </div>
+                <div class="col-md-6">
+                    <p>phone: @Model.InputModel.Phone</p>
+                    <p>postal code: @Model.InputModel.PostalCode</p>
+                    <p>privacy: @Model.InputModel.Privacy</p>
+
+                    <p>State: @Model.InputModel.State</p>
+
+                    <p>Website: @Model.InputModel.Website</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    <</section>

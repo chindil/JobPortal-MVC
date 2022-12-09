@@ -1,0 +1,35 @@
+﻿
+@using Stx.Shared.Common
+@model Stx.Web.JP.Core.PageStatus
+
+<div class="bg-white center-image error-banner">
+    @if(Model.IsLoading)
+    {
+        <div class="spinner-grow text-success" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    }
+    else
+    {
+        if (Model.StatusCode == 400)
+        {
+            <img src="~/img/error/401.jpg" alt="Page load error." />
+        }
+        else if (Model.StatusCode == 401)
+        {
+            <img src="~/img/error/401.jpg" alt="Unauthorized!" />
+        }
+        else if (Model.StatusCode == 403)
+        {
+            <img src="~/img/error/403.jpg" alt="Unauthorized!" />
+        }
+        else if (Model.StatusCode == 404)
+        {
+            <img src="../img/error/401.jpg" alt="Unauthorized!" />
+        }
+        else if (Model.StatusCode >= 1)
+        {
+            <img src="../img/error/401.jpg" alt="Unauthorized!" />
+        }
+    }
+</div>

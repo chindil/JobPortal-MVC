@@ -1,0 +1,210 @@
+﻿@page
+@using Stx.Shared.Extensions.Common
+@model Stx.Web.JP.Pages.Jobs.SubmitModel
+@{
+}
+
+<section class="min-sec h-100">
+    <div class="container">
+        <partial name="_StatusMessage" for="StatusMessage" />
+
+        @if (Model.IsApplicSubmitted)
+        {
+            <div class="card pb-2">
+                <div class="card-header pb-1">
+                    <h5>Your application has been submitted. </h5>
+                    <p class="text-muted"> The employer may contact you if you are short listed. Alternatively you may receive progress updates about your application via email, if the employer is using our ATS.</p>
+                    <hr class="my-0" />
+                </div>
+                <div class="card-body mx-3 py-2">
+                    <div>
+                        <h5>People who applied this job, also applied for: </h5>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+
+            @*@using (Html.BeginForm("", "", Model.OnPostSubmitApplication, false, null))
+                {
+
+                }*@
+            <form id="jobsubmitForm" method="post">
+                <input type="hidden" asp-for="BaseEntry.JobOrderID" />
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card pb-2">
+                            <div class="card-header pb-1">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <h6 class="card-title" id="repeat-form">Apply for @Model.BaseEntry.JobTitle</h6>
+                                        <p class="small text-theme" id="repeat-form">@Model.BaseEntry.CorporateName</p>
+                                    </div>
+                                    <div class="flex-shrink-0 medium">
+                                        <button class="btn btn-link">Cancel</button>
+                                        <button type="submit" form="jobsubmitForm" asp-page-handler="SubmitApplication" class="btn btn-primary px-2">Submit Application</button>
+                                    </div>
+                                </div>
+                                <hr class="my-0" />
+                            </div>
+                            <div class="card-body mx-3 py-2">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0 avatar-small mt-1">
+                                            <img src="@User.FindFirst(x => x.Type == "profileurl").Value" onerror="this.onerror=null;this.src='/img/avatar.png';" class="img-fluid mx-auto img-circle" alt="">
+                                        </div>
+                                        <div class="d-flex flex-grow-1 ms-3 small">
+                                            <div class="flex-grow-1">
+                                                <p class="fs-6 fw-bold mb-1 text-muted">@Model.BaseEntry.CandidateName</p>
+                                                <label class="text-muted"> @Model.BaseEntry.CandidateEmail</label>
+                                                <span>•</span>
+                                                <label class="text-muted"> @Model.BaseEntry.CandidateMobile</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-auto my-auto">
+                                            <label class="form-label fw-bold"> Resume</label>
+                                        </div>
+                                        <div class="col-auto">
+                                            <select class="form-select form-select-sm job-submit-resume" asp-for="BaseEntry.ResumeName" aria-label="Select a resume">
+                                                @if (@Model.BaseEntry.Resumes != null && @Model.BaseEntry.Resumes.Count > 1)
+                                                {
+                                                    <option selected>Select a resume</option>
+                                                }
+                                                @foreach (var item in @Model.BaseEntry.Resumes)
+                                                {
+                                                    <option value="@item.Name">@item.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-auto my-auto small">
+                                            <span class="form-label"><a class="ps-1" href="#">View </a> or <a href="#">Update Resume</a></span>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-shrink-0 avatar-small mt-1">
+                                            <img src="@(string.IsNullOrWhiteSpace(@Model.BaseEntry.CandidateEmail) ? "/img/avatar.png" : "/img/avatar.png")" class="img-fluid mx-auto img-circle" alt="">
+                                        </div>
+                                        <div class="d-flex flex-grow-1 ms-3 small">
+                                            <div class="flex-grow-1">
+                                                <p class="fs-6  mb-1 text-muted">You may log-in to your account to easily & quickly apply for this job. </p>
+                                                <a href="/Account/Action?act=signin" class="text-primary fw-bold"> Login</a>
+                                        <hr class="w-25 " />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2 mb-3 ps-5">
+                                    </div>
+
+                                    <div class="row mt-3">
+                                        <div class="col-auto my-auto">
+                                            <label class="form-label fw-bold"> Attach your resume here to apply for the job. </label>
+                                        </div>
+                                        <div class="col-auto my-auto small">
+                                            <span class="form-label"><a class="ps-1" href="#"> Select Resume</a></span>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="row mt-3">
+                                    <label class="fw-bold">Cover Letter</label>
+                                    <div class="col-sm-12 col-md-10 col-lg-8">
+                                        <textarea class="form-control" asp-for="BaseEntry.CoverLetter" rows="5"> </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.BaseEntry.ReviewQuestions != null && Model.BaseEntry.ReviewQuestions.Count > 0)
+                {
+                    <div class="card mt-2">
+                        <div class="card-header pb-2">
+                            <h6 class="card-title" id="repeat-form"><i class="bi bi-question-circle-fill me-1"></i> Additional Questions</h6>
+                            <p class="medium text-mutedd my-1 text-theme ps-3" id="repeat-form">Please answer following questions to continue submitting the job application.</p>
+                            <p class="small text-muted mb-0 ps-3" id="repeat-form">These additional details are required by the employer. </p>
+                            <hr class="my-2" />
+                        </div>
+
+                        <div class="card-body mx-4 pt-2 text-dark">
+                            @for (int i = 0; i < @Model.BaseEntry.ReviewQuestions.Count; i++)
+                            {
+                                int id = @Model.BaseEntry.ReviewQuestions[i].ID;
+                                int dispKey = @Model.BaseEntry.ReviewQuestions[i].DisplayKey;
+                                string fieldType = @Model.BaseEntry.ReviewQuestions[i].FieldType;
+
+                                <div class="row mb-3">
+                                    <div class="col-12 small text-job-question ">
+
+                                        @Html.HiddenFor(m => m.BaseEntry.ReviewQuestions[dispKey].ID)
+                                        @Html.HiddenFor(m => m.BaseEntry.ReviewQuestions[dispKey].DisplayKey)
+                                        @Html.LabelFor(m => m.BaseEntry.ReviewQuestions[dispKey].Desc, @Model.BaseEntry.ReviewQuestions[dispKey].Desc, new { @class = "form-label ", @for = $"rbNos{id}" })
+
+                                        @*TEST*@
+                                        @*<label> ---- @Model.BaseEntry.ReviewQuestions[dispKey].ID - @dispKey</label>*@
+                                        @*@Html.TextBoxFor(m => m.BaseEntry.ReviewQuestions[dispKey].UserAnswer, new { @class = "form-control w-50", @rows = "3" })*@
+
+
+                                        @if (fieldType.Compare("yn"))
+                                        {
+                                            <div class="form-check">
+                                                @Html.RadioButtonFor(m => m.BaseEntry.ReviewQuestions[dispKey].UserAnswer, "Y", new { @class = "form-check-input", @id = $"rbYes{id}" })
+                                                @Html.LabelFor(m => m.BaseEntry.ReviewQuestions[dispKey].UserAnswer, "Yes", new { @class = "form-check-label", @for = $"rbYes{id}" })
+                                            </div>
+                                            <div class="form-check">
+                                                @Html.RadioButtonFor(m => m.BaseEntry.ReviewQuestions[dispKey].UserAnswer, "N", new { @class = "form-check-input", @id = $"rbNo{id}" })
+                                                @Html.LabelFor(m => m.BaseEntry.ReviewQuestions[dispKey].UserAnswer, "No", new { @class = "form-check-label", @for = $"rbNo{id}" })
+                                            </div>
+                                        }
+                                        else if (fieldType.Compare("num"))
+                                        {
+                                            @Html.TextBoxFor(m => m.BaseEntry.ReviewQuestions[dispKey].UserAnswer, new { @class = "form-control w-50", @type = "number" })
+                                        }
+                                        else if (fieldType.Compare("list"))
+                                        {
+                                            @Html.DropDownListFor(m => Model.BaseEntry.ReviewQuestions[dispKey].UserAnswer,
+                                                new SelectList(Model.BaseEntry.ReviewQuestions[dispKey].FieldSrcDataList, "Value", "Text"),
+                                                "Select a value...",
+                                                new { @class = "form-select w-50" })
+                                        }
+                                        else if (fieldType.Compare("long_ans"))
+                                        {
+                                            @Html.TextAreaFor(m => m.BaseEntry.ReviewQuestions[dispKey].UserAnswer, new { @class = "form-control w-50", @rows = "3" })
+                                        }
+                                        else //for "short_ans" or other types
+                                        {
+                                            @Html.TextBoxFor(m => m.BaseEntry.ReviewQuestions[dispKey].UserAnswer, new { @class = "form-control w-50", @rows = "3" })
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+                <div class="card mt-2">
+                    <div class="card-header d-flex py-2">
+                        <div class="flex-grow-1 align-self-end">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <p class="small text-muted mt-auto"> Submitting by updating your details here won't change your profile information.</p>
+                            }
+                        </div>
+                        <div class="flex-shrink-0 medium">
+                            <button class="btn btn-link">Cancel</button>
+                            <button type="submit" form="jobsubmitForm" asp-page-handler="SubmitApplication" class="btn btn-primary px-2">Submit Application</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
+</section>

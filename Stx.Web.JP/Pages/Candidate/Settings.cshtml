@@ -1,0 +1,73 @@
+﻿@page
+@model Stx.Web.JP.Pages.Candidate.SettingsModel
+@{
+}
+
+<section class="min-sec">
+    <div class="container">
+        <partial name="_StatusMessage" for="StatusMessage" />
+
+        <div class="row">
+            <partial name="_LeftMenuProfile" for="PageKey" />
+
+            @if (Model.PageStatus.IsDisplyErrorBanner)
+            {
+                <div class="col-md-9">
+                    <partial name="_StatusBanner" for="PageStatus" />
+                </div>
+            }
+            else
+            {
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex bd-highlight ">
+                                <h4 class="card-title flex-grow-1" id="repeat-form">Settings</h4>
+                                <button class="btn btn-outline-primary btn-sm py-1 me-3" value="-1" form="resumeModify" asp-route-id="-1" asp-page-handler="AddEditEntity">
+                                    <i class="ti-plus pe-1"></i><span>Add New</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-content collapse show">
+                            <div class="card-body">
+                                @{
+                                    string col1Style = "col-sm-3";
+                                    string col2Style = "col-sm-9";
+                                    <form class="resume-edit-panel" method="post" asp-page-handler="SubmitEntry">
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                        <input type="hidden" asp-for="BaseEntry.CandidateID" value="@Model.CandidateID" />
+
+                                        <div class="row mb-3">
+                                            <label asp-for="BaseEntry.JobSearchingMode" class="@col1Style col-form-label">Job Searching Mode</label>
+                                            <div class="@col2Style">
+                                                <select asp-for="BaseEntry.JobSearchingMode" class="form-select">
+                                                    <option value="0">Activly Looking</option>
+                                                    <option value="1">Casually Looking</option>
+                                                    <option value="2">Not Active (Private)</option>
+                                                </select>
+                                                <span asp-validation-for="BaseEntry.JobSearchingMode" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="@col1Style col-form-label"></div>
+                                            <div class="@col2Style">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

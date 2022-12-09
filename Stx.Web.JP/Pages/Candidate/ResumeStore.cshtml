@@ -1,0 +1,185 @@
+﻿@page
+@model Stx.Web.JP.Pages.Candidate.ResumeStoreModel
+@{
+}
+
+<section class="min-sec">
+    <div class="container">
+        <partial name="_StatusMessage" for="StatusMessage" />
+
+        <div class="row">
+            <partial name="_LeftMenuResume" for="PageKey" />
+
+            @if (Model.PageStatus.IsDisplyErrorBanner)
+            {
+                <div class="col-md-9">
+                    <partial name="_StatusBanner" for="PageStatus" />
+                </div>
+            }
+            else
+            {
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex bd-highlight">
+                                <div class="d-flex bd-highlight flex-grow-1">
+                                    <h4 class="card-title flex-grow-1" id="repeat-form">Resume Store</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content collapse show">
+                            <div class="card-body ms-1">
+                                @*ADD A NEW RESUME*@
+                                @if (Model.IsAddNewMode)
+                                {
+                                    <form asp-page-handler="AddNewResume" method="post" enctype="multipart/form-data">
+
+                                        <div class="row">
+                                            <div class="col-md-11 col-sm-12">
+                                                <div class="d-flex flex-column align-items-center">
+                                                    <label class="fs-4">
+                                                        Upload your resume
+                                                    </label>
+                                                    <label class="small">
+                                                        Supported file types are PDF, DOCX & DOC.
+                                                    </label>
+
+                                                    <div class="card mt-4">
+                                                        <div class="card-body" style="height:150px;width:300px">
+                                                            <label class="upload-file btn btn-link text-success border-0 d-flex flex-column align-items-center">
+                                                                <input class="form-control" asp-for="@Model.ResumeFile1" type="file" id="formFile">
+                                                                <i class="bi bi-file-earmark-arrow-up fs-2"></i>
+                                                                <label class="form-label text-muted">  Drag and drop or select a file to upload </label>
+                                                                <span class="dsmall mt-2"><i class="bi-upload me-1"></i> Select a resume to upload</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-3" style="width:300px">
+                                                        <input type="text" class="form-control text-muted my-1" placeholder="Resume Description" 
+                                                               asp-for="@Model.BaseEntryNew.EntityDesc" />
+                                                    </div>
+                                                    <span asp-validation-for="@Model.ResumeFile1"></span>
+                                                </div>
+
+                                                <div class="d-flex justify-content-center my-3 gap-1">
+                                                    <a asp-page="./ResumeStore/" class="btn btn-outline-secondary"> Back</a>
+                                                    <input class="btn btn-outline-info" type="submit" value="Save" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                                else
+                                {
+                                    //RESUME LIST HEADER
+                                    <div class="row">
+                                        <div class="col-md-11 col-sm-12 ms-1">
+                                            <div class="d-flex px-3 align-self-center">
+                                                <div class="flex-grow-1 align-self-center">
+                                                    <label class="form-label text-muted">
+                                                        To start adding a new resume click the add <i class="bi bi-plus-square"></i> button.
+                                                        <br />
+                                                        To modify an existing resume please remove & add the new resume.
+                                                    </label>
+                                                </div>
+                                                <div class="d-flex bd-highlight ">
+                                                    <a asp-page-handler="AddNewResume" class="btn btn-link py-1">
+                                                        <i class="bi bi-plus-square fs-3"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                                <hr class="mx-3" />
+                                        </div>
+                                    </div>
+
+                                    //SHOW TIPS, IF THE USER HAVENT ADD ANY RESUME YET.
+                                    @if (@Model.BaseEntries.Count == 0)
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-11 col-sm-12 mt-3">
+                                                <div class="d-flex flex-column align-items-center">
+                                                    <label class="fs-5">
+                                                        No resume added yet
+                                                    </label>
+                                                    <label class="small text-muted text-center">
+                                                        Adding resume(s) will help you to ease the job application process.
+                                                        <br />
+                                                        With the added resume you will have an option to quick-apply for selected jobs.
+                                                    </label>
+
+                                                    <div class="card-body">
+                                                        <label class="text-success border-0 d-flex flex-column align-items-center">
+                                                            <i class="bi bi-file-earmark-plus fs-2"></i>
+                                                            <label class="form-label small text-muted"> You may upload up to two resumes.</label>
+                                                        </label>
+                                                        <a asp-page-handler="AddNewResume" class="btn btn-outline-info mt-2">
+                                                            Add your resume now
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        //SHOW LIST OF EXISTING RESUMES
+                                        <form asp-page-handler="DeleteResume" method="post" enctype="multipart/form-data">
+
+                                            <div class="row">
+                                                <div class="col-md-11 col-sm-12">
+                                                    <div class="list-group p-2">
+                                                        @for (int i = 0; i < Math.Min(2, @Model.BaseEntries.Count); i++)
+                                                        {
+                                                            <div class="d-flex bd-highlight px-3">
+                                                                <div class="bd-highlight">
+                                                                    @if (System.IO.Path.GetExtension(@Model.BaseEntries[i].EntityValue) == ".pdf")
+                                                                    {    <i class="bi bi-file-pdf fs-1"></i> }
+                                                                    else
+                                                                    {  <i class="bi bi-file-word fs-1"></i>}
+                                                                </div>
+                                                                <div class="flex-grow-1 flex-column bd-highlight">
+                                                                    <div class="p-2 d-flex flex-column align-items-start">
+                                                                        <input type="hidden" asp-for="@Model.BaseEntries[i].ID" />
+                                                                        <input type="hidden" asp-for="@Model.BaseEntries[i].RecordType" />
+                                                                        <a class="link-success font-bold mb-1" href="@Model.BaseEntries[i].DynmcFileUrl" target="_blank">
+                                                                            @Model.BaseEntries[i].EntityValue
+                                                                        </a>
+                                                                        <label class="form-label text-muted fw-bolder my-1">
+                                                                            @Model.BaseEntries[i].EntityDesc
+                                                                        </label>
+                                                                        <label class="form-label text-muted">
+                                                                            Uploaded on @Model.BaseEntries[i].DateUpdated.ToString("dd MMM yyyy hh:mm tt")
+                                                                        </label>
+                                                                        <span asp-validation-for="@Model.ResumeFile1"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="bd-highlight">
+                                                                    <button asp-page-handler="DeleteResume" asp-route-FileName="@Model.BaseEntries[i].EntityValue"
+                                                                            class="btn btn-link">
+                                                                        <i class="bi bi-trash fs-5"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <hr class="mx-3" />
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

@@ -1,0 +1,22 @@
+﻿@*@model string
+
+    @if (!String.IsNullOrEmpty(Model))
+    {
+        var statusMessageClass = Model.StartsWith("Error") ? "danger" : "success";
+        <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            @Model
+        </div>
+    }*@
+
+@using Stx.Shared.Common
+@model AlertMsg
+
+@if (Model != null && Model.IsActiveMsg)
+{
+    var statusMessageClass = Model.MsgType == MsgType.Error ? "danger" : "success";
+    <div class="alert alert-@statusMessageClass alert-dismissible fade show" role="alert">
+        @Model.Message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}

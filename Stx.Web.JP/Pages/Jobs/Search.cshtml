@@ -1,0 +1,384 @@
+﻿@page
+@using Stx.Shared.Extensions.Common;
+@model Stx.Web.JP.Pages.Jobs.SearchModel
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+@*<div class="Loader"></div>*@
+
+<!-- ============================ Main Banner  Start================================== -->
+<div class="hero-header jumbo-banner" style="background: url(@Url.Content("/img/banner-0.jpg")) ;" data-overlay="6">
+    <div class="container">
+        <h2>Find your next job</h2>
+        <p class="lead">Find Jobs, Employment & Best Career Opportunities</p>
+        <div class="col-lg-9 col-md-10">
+            <form class="search-big-form no-border search-shadow" method="post" asp-page-handler="Search">
+                <div class="row m-0">
+                    <div class="col-lg-4 col-md-4 col-sm-12 p-0">
+                        <div class="form-group">
+                            <i class="bi-search"></i>
+                            <input type="text" name="keyword" class="form-control b-r" asp-for="SearchParms.Keyword" placeholder="Job Title or Keywords">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                        <div class="form-group">
+                            <i class="bi-geo-alt"></i>
+                            <input type="text" name="location" class="form-control b-r" asp-for="SearchParms.Location" placeholder="Location">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                        <div class="form-group">
+                            <i class="bi bi-briefcase"></i>
+                            @Html.DropDownListFor(m => Model.SearchParms.JobIndustries,
+                                               new SelectList(Model.JobIndustryList, "Value", "Text"),
+                                               "Job Industry",
+                                               new { @class = "form-control form-select b-r", @placeholder = "Job Industry" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                        <input type="submit" value="Search" class="btn btn-primary full-width"  />
+                    </div>
+                </div>
+            </form>
+
+            <div class="d-flex gap-1 mt-3 job-filter-dropdown small">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                        Career Level
+                    </button>
+                    <div class="dropdown-menu ">
+                        <label class="group-title">Experience Level</label>
+                        <form class="filter-group">
+                            <div class="mb-3">
+                                <div class="form-check checkbox-md">
+                                    <input class="form-check-input" type="checkbox" name="radioExpLevel" id="radioExpLevelAll" value="0" checked>
+                                    <label class="form-check-label" for="radioExpLevelAll">All</label>
+                                </div>
+                                @foreach (var carrLevel in Model.JobFilterCareerLevelList)
+                                {
+                                    <div class="form-check checkbox-md">
+                                        <input class="form-check-input" type="checkbox" name="radioExpLevel" id="@($"radioExpLevel{@carrLevel.Value}")" value="@carrLevel.Value">
+                                        <label class="form-check-label" for="@($"radioExpLevel{@carrLevel.Value}")">@carrLevel.Text</label>
+                                    </div>
+                                }
+                            </div>
+                            <div class="filter-group-button">
+                                <button type="reset" class="btn btn-outline-secondary job-filter-button-clear">Clear</button>
+                                <button type="submit" class="btn btn-primary job-filter-button-apply">Apply</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                        Job Type
+                    </button>
+                    <div class="dropdown-menu ">
+                        <label class="group-title">Job Type</label>
+                        <form class="filter-group">
+                            <div class="form-check checkbox-md">
+                                <input class="form-check-input" type="checkbox" name="checkboxJobType" id="checkboxJobTypeAll" value="0" checked>
+                                <label class="form-check-label" for="checkboxJobTypeAll">All</label>
+                            </div>
+                            @foreach (var carrLevel in Model.JobFilterEmploymentTypeList)
+                            {
+                                <div class="form-check checkbox-md">
+                                    <input class="form-check-input" type="checkbox" name="checkboxJobType" id="@($"checkboxJobType{@carrLevel.Value}")" value="@carrLevel.Value">
+                                    <label class="form-check-label" for="@($"checkboxJobType{@carrLevel.Value}")">@carrLevel.Text</label>
+                                </div>
+                            }
+                            <div class="filter-group-button">
+                                <button type="reset" class="btn btn-outline-secondary job-filter-button-clear">Clear</button>
+                                <button type="submit" class="btn btn-primary job-filter-button-apply">Apply</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                        Salary
+                    </button>
+                    <div class="dropdown-menu ">
+                        <label class="group-title">Salary</label>
+                        <form class="filter-group">
+                            <label>Minimum salary</label>
+                            <div class="mb-3">
+                                <input type="number" class="form-control" placeholder="Minimum salary" min="0">
+                            </div>
+                            <label>Maximum salary</label>
+                            <div class="mb-3">
+                                <input type="number" class="form-control" placeholder="Maximum salary" min="0">
+                            </div>
+                            <div class="filter-group-button">
+                                <button type="reset" class="btn btn-outline-secondary job-filter-button-clear">Clear</button>
+                                <button type="submit" class="btn btn-primary job-filter-button-apply">Apply</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                        Date Posted
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <label class="group-title">Date Posted</label>
+                        <form class="filter-group">
+                            <div class="form-check radio-md">
+                                <input class="form-check-input" type="radio" name="radioDatePosted" id="radioDP0days" value="0" checked>
+                                <label class="form-check-label" for="radioDP0days">Any</label>
+                            </div>
+                            <div class="form-check radio-md">
+                                <input class="form-check-input" type="radio" name="radioDatePosted" id="radioDP3days" value="3">
+                                <label class="form-check-label" for="radioDP3days">Last 3 days</label>
+                            </div>
+                            <div class="form-check radio-md">
+                                <input class="form-check-input" type="radio" name="radioDatePosted" id="radioDP7days" value="7">
+                                <label class="form-check-label" for="radioDP7days">Last 7 days</label>
+                            </div>
+                            <div class="form-check radio-md">
+                                <input class="form-check-input" type="radio" name="radioDatePosted" id="radioDP30days" value="30">
+                                <label class="form-check-label" for="radioDP30days">Last 30 days</label>
+                            </div>
+                            <div class="form-check radio-md">
+                                <input class="form-check-input" type="radio" name="radioDatePosted" id="radioDP90days" value="90">
+                                <label class="form-check-label" for="radioDP90days">Last 3 months</label>
+                            </div>
+                            <div class="form-check radio-md">
+                                <input class="form-check-input" type="radio" name="radioDatePosted" id="radioDP360days" value="360">
+                                <label class="form-check-label" for="radioDP360days">Last 12 months</label>
+                            </div>
+                            <div class="filter-group-button w-100">
+                                <button type="reset" class="btn btn-outline-secondary job-filter-button-clear">Clear</button>
+                                <button type="submit" class="btn btn-primary job-filter-button-apply">Apply</button>
+                            </div>
+                        </form>
+                    </div>
+                </div> 
+                <label class="btn btn-secondary btn-sm toggle-checkbox inverse checkbox-button">
+                    <input ba class="form-check-input" type="checkbox" name="checkboxRemote" id="checkboxRemote1" )" value="0" >
+                    Remote
+                </label>
+            </div>
+
+            <!--<div class="featured-category">-->
+            <!--<ul>
+                <li>Suggested Industries:</li>
+                for (int i = 0; i < Math.Min(Model.JobIndustryList.Count, 6); i++)
+                {
+                    <li>
+                        <a asp-page="../Jobs/Search" asp-page-handler="SearchIndustry" asp-route-id="Model.JobIndustryList[i].Value">
+                            Model.JobIndustryList[i].Text
+                        </a>
+                    </li>
+                }
+            </ul>-->
+            <!--</div>-->
+        </div>
+
+    </div>
+</div>
+
+<!-- ============================ Main Banner End ================================== -->
+
+
+<section class="min-sec">
+
+    <!-- #region JOB LIST & SELECTED JOB DETAIL-->
+
+    <div class="container ">
+        <partial name="_StatusMessage" for="StatusMessage" />
+
+        @if (Model.InputModel != null)
+        {
+            <div class="row">
+                @*Job List - Left*@
+
+                <div class="col-5 col-md-5 col-lg-4 col-xl-4">
+                    <div class="bg-white">
+                        <div class="list-group px-0">
+                            @foreach (var item in Model.InputModel)
+                            {
+                                <a href="#" class="jobresult ps-1 list-group-item list-group-item-action sidebar-list-single" aria-current="true" data-jobid="@item.JobOrderID">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="d-flex flex-column ps-1">
+                                            <span class="avatar-logo">
+                                                <img src="@item.DynmcImageUrl" alt="@item.CorporateName" title="@item.CorporateName Logo">
+                                            </span>
+                                        </div>
+
+                                        <div class="d-flex flex-column w-100 px-2">
+                                            <div class="d-flex bd-highlight ">
+                                                <p class="mb-0 job-list-title w-100"><span>@item.Title</span></p>
+                                                <div class="flex-shrink-1 flex-nowrap ps-1">
+                                                    <span id="@($"joblistbookmarkedIcon{item.JobOrderID}")" class="nowrap job-bookmark">
+                                                        @if (item.IsBookmarked.GetValueOrDefault())
+                                                        {
+                                                            <i class="bi bi-heart-fill"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            @*<i class="bi bi-heart"></i>*@
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <p class="my-0 py-0"><span class="job-list-line2">@item.CorporateName </span></p>
+                                            <p class="my-0 py-0"><span class="pr-xxsm job-list-line3 text-muted">@item.Country.JoinIfNotEmpty(", ", @item.Location) </span></p>
+                                            <div class="d-flex my-0 py-0">
+                                                <div class="pr-xxsm w-100">
+                                                    <span class="job-list-salary">
+                                                        @item.Salary.ShowSalaryRanage(@item.SalaryTo, "-", item.SalaryCurrCD, true)
+                                                    </span>
+                                                </div>
+                                                <div class="d-flex flex-shrink-1">
+                                                    <span class="job-list-time"> @item.DateStart.TimeAgoNullable(true)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-2 mb-1 mx-0 text-muted" />
+                                </a>
+                            }
+                        </div>
+                    </div>
+
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                @*Selected Job Details - Right*@
+                <div class="col-7 col-md-7 col-lg-8 col-xl-8 " id="jobload">
+                    <div class="bg-white center-image">
+                        <img src="~/img/download-our-app.jpg" alt="Content not found." />
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <!-- #endregion -->
+</section>
+
+@section scripts{
+    <script>
+        $('.dropdown-menu').click(function (e) {
+            e.stopPropagation(); //This will prevent the event from bubbling up and close the dropdown when you type/click on text boxes.
+        });
+
+        $(document).ready(function () {
+            if ('@Model.joborderid' > 0) {
+                getJobFunction(@Model.joborderid);
+            }
+
+            $('.jobresult').on('click', function () {
+                var jobid = $(this).data('jobid');
+                getJobFunction(jobid);
+            });
+
+            $(document).on('click', '#jobactionsubmit', function () {
+                var jobid = $(this).data('jobid');
+                var actionName = $(this).data('actionname');
+                var actionValue = 'y';
+                var btntext = $(this).text().trim();
+                if (btntext == 'Unsave') {
+                    actionValue = 'n';
+                }
+                bookmarkJobFunction(jobid, actionName, actionValue);
+            });
+
+            $(document).on('click', '#jobActionReportSubmit', function () {
+                var jobid = $(this).data('jobid');
+                var actionName = $(this).data('actionname');
+                var actionValue = $("input[name='radioActionReport']:checked").val();
+                bookmarkJobFunction(jobid, actionName, actionValue);
+                $('#myModalreport').modal('hide');
+            });
+
+        });
+
+        function getJobFunction(jobId) {
+            $.ajax({
+
+                    url: '@Url.Page("/Jobs/Details", "JobDetailsPartial")',
+                    type: 'GET',
+                    data: {
+                        Id: jobId
+                    },
+                    success: function (data) {
+                        $('#jobload').html("");
+                        $('#jobload').html(data);
+                    },
+                    error: function () {
+                        $('#jobload').html("");
+                        $('#jobload').html(`
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                The job content has not found.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <div class="bg-white center-image error-banner">
+                                <img src="../img/error/404.jpg" alt="Content not found." />
+                            </div> `);
+                    }
+                });
+        }
+
+        function bookmarkJobFunction(jobId, actionname, actionvalue) {
+            $.ajax({
+
+                url: '@Url.Page("/Jobs/Details", "JobAction")',
+                type: 'get',
+                data: {
+                    actionName: actionname,
+                    actionValue: actionvalue,
+                    jobOrderId: jobId
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (actionname == 'bookmark') {
+                        if (data.status == 'succuss' && actionvalue == 'n') {
+                            $('#jobactionsubmit').html("");
+                            $('#jobactionsubmit').html('Save');
+                            $('#joblistbookmarkedIcon' + jobId).html('<i class="bi bi-heart"></i>');
+                        }
+                        else if (data.status == 'succuss' && actionvalue == 'y') {
+                            $('#jobactionsubmit').html("");
+                            $('#jobactionsubmit').html('Unsave');
+                            $('#joblistbookmarkedIcon' + jobId).html('<i class="bi bi-heart-fill"></i>');
+                        }
+                    }
+                    else if (actionname == 'report') {
+                        if (data.status == 'succuss') {
+
+                            }
+                    }
+                },
+                error: function () {
+                }
+            });
+        }
+
+
+    </script>
+}
+
